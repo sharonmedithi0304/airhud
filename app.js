@@ -234,10 +234,10 @@ function setGestureUI(key){
    DRAWING — SKELETON + CURSOR/RETICLE
 ============================================================ */
 function resizeCanvases(){
-  [overlay, cursorLayer].forEach(c => {
-    c.width = video.clientWidth;
-    c.height = video.clientHeight;
-  });
+  overlay.width = video.clientWidth;
+  overlay.height = video.clientHeight;
+  cursorLayer.width = window.innerWidth;
+  cursorLayer.height = window.innerHeight;
 }
 window.addEventListener("resize", resizeCanvases);
 

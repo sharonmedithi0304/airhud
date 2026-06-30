@@ -53,12 +53,12 @@
     <div class="video-wrap">
       <video id="video" playsinline autoplay muted></video>
       <canvas id="overlay"></canvas>
-      <canvas id="cursorLayer"></canvas>
-
-      <!-- gesture confidence reticle is drawn on cursorLayer canvas -->
 
       <div class="rec-badge"><span class="rec-dot"></span>LIVE</div>
     </div>
+    <!-- cursor renders full-page (fixed), not clipped to the video box,
+         so it can reach the keyboard below the camera view -->
+    <canvas id="cursorLayer"></canvas>
 
     <!-- ===== RIGHT HUD RAIL ===== -->
     <aside class="hud-rail">
