@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AirHUD — Touchless Gesture Interface</title>
+<meta name="description" content="A browser-based hand-tracking HUD: control a cursor, type on a floating keyboard, scroll and zoom — all with bare hands in front of a webcam." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="cyan">
+
+  <!-- ===== TOP BAR ===== -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">◈</span>
+      <span class="brand-text">AIR<span class="brand-thin">HUD</span></span>
+    </div>
+
+    <div class="status-cluster">
+      <div class="status-chip" id="statCam"><span class="dot"></span>CAMERA</div>
+      <div class="status-chip" id="statHands"><span class="dot"></span>0 HANDS</div>
+      <div class="status-chip mono" id="statFps">-- FPS</div>
+    </div>
+
+    <div class="theme-rail" id="themeRail" aria-label="Theme select">
+      <button class="theme-dot" data-theme="cyan" title="Cyan"></button>
+      <button class="theme-dot" data-theme="violet" title="Violet"></button>
+      <button class="theme-dot" data-theme="amber" title="Amber"></button>
+    </div>
+  </header>
+
+  <!-- ===== START OVERLAY ===== -->
+  <div class="start-overlay" id="startOverlay">
+    <div class="start-card">
+      <div class="start-glyph">◈</div>
+      <h1>AirHUD</h1>
+      <p>A touchless interface. Your hand becomes the mouse, the keyboard, the scroll wheel.</p>
+      <ul class="start-list">
+        <li><b>Pinch</b> thumb + index to click or type</li>
+        <li><b>Peace sign ✌</b> &amp; move vertically to scroll</li>
+        <li><b>Open palm, hold</b> to drag</li>
+        <li><b>Two hands, pinch &amp; spread</b> to zoom</li>
+      </ul>
+      <button id="startBtn" class="btn-primary">Enable Camera &amp; Begin</button>
+      <p class="start-note">Runs entirely in your browser. Nothing is uploaded.</p>
+    </div>
+  </div>
+
+  <!-- ===== MAIN STAGE ===== -->
+  <main class="stage">
+    <div class="video-wrap">
+      <video id="video" playsinline autoplay muted></video>
+      <canvas id="overlay"></canvas>
+      <canvas id="cursorLayer"></canvas>
+
+      <!-- gesture confidence reticle is drawn on cursorLayer canvas -->
+
+      <div class="rec-badge"><span class="rec-dot"></span>LIVE</div>
+    </div>
+
+    <!-- ===== RIGHT HUD RAIL ===== -->
+    <aside class="hud-rail">
+      <section class="panel">
+        <h2>Active Gesture</h2>
+        <div class="gesture-readout" id="gestureReadout">
+          <div class="gesture-icon" id="gestureIcon">—</div>
+          <div>
+            <div class="gesture-name" id="gestureName">Idle</div>
+            <div class="gesture-sub" id="gestureSub">Show a hand to begin</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Mode</h2>
+        <div class="mode-dock" id="modeDock">
+          <button class="mode-pill active" data-mode="mouse">Mouse</button>
+          <button class="mode-pill" data-mode="keyboard">Keyboard</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Settings</h2>
+        <label class="slider-row">
+          <span>Sensitivity</span>
+          <input type="range" id="sensSlider" min="0.5" max="2.5" step="0.1" value="1.4">
+        </label>
+        <label class="slider-row">
+          <span>Smoothing</span>
+          <input type="range" id="smoothSlider" min="0" max="0.9" step="0.05" value="0.55">
+        </label>
+        <label class="toggle-row">
+          <span>Sound feedback</span>
+          <input type="checkbox" id="soundToggle" checked>
+        </label>
+        <label class="toggle-row">
+          <span>Voice feedback</span>
+          <input type="checkbox" id="voiceToggle">
+        </label>
+        <label class="toggle-row">
+          <span>Skeleton overlay</span>
+          <input type="checkbox" id="skeletonToggle" checked>
+        </label>
+      </section>
+
+      <section class="panel log-panel">
+        <h2>Event Log</h2>
+        <div class="log-list mono" id="logList"></div>
+      </section>
+    </aside>
+  </main>
+
+  <!-- ===== VIRTUAL KEYBOARD ===== -->
+  <div class="keyboard-dock" id="keyboardDock">
+    <div class="keyboard-glass" id="keyboard"></div>
+    <div class="type-strip">
+      <span class="type-label">TYPED</span>
+      <span id="typedOutput" class="type-output mono"></span>
+      <button id="clearTyped" class="btn-ghost">Clear</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    Built with MediaPipe Hand Landmarker · runs 100% on-device · no data leaves your browser
+  </footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
