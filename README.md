@@ -4,6 +4,8 @@ A browser-based, zero-install evolution of the original Python virtual-keyboard 
 Runs entirely client-side (MediaPipe Hand Landmarker via WASM/GPU), so it deploys as a
 plain static site — no Python, no backend, no install step for anyone who opens the link.
 
+##GO live at https://sharonmedithi0304.github.io/airhud/
+
 ## Why this is the web version
 
 The original project used `pynput` to move your **real OS mouse** — that only works as a
